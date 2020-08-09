@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>SCHOOL JOURNALIST</title>
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="//bootswatch.com/4/lux/bootstrap.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/p5.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.1/addons/p5.dom.min.js"></script>
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.4.1/css/simple-line-icons.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link href="//fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+	<link rel="icon" type="image/x-icon" href="https://scontent-sin6-2.cdninstagram.com/v/t51.2885-19/s150x150/15035618_1723589084628725_4472163451766046720_n.jpg?_nc_ht=scontent-sin6-2.cdninstagram.com&_nc_ohc=kgw3-fF2YdIAX_B9CLG&oh=09edac4492c7e0b71b382b39511ebd08&oe=5F57624D"/>
+	<style>
+		body {
+			background: #ebecf5;
+    cursor: url(http://cur.cursors-4u.net/cursors/cur-11/cur1025.ani), url(http://cur.cursors-4u.net/cursors/cur-11/cur1025.png), progress !important;
+		}
+		header {
+			padding: 20px 0px;
+		}
+
+		.btn-shadow {
+			    box-shadow: 0px 5px 10px #dcdcdc4d !important;
+    			border-radius: 6px;
+    			margin-bottom: 20px;
+		}
+
+		.display-4 {
+			font-family: 'Nunito', sans-serif;
+		}
+
+		#canvas {
+			padding:10px;
+		}
+
+		#inputbtn {
+			margin:10px;
+			width: 350px;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<div class="container">
+			<div class="row">
+				<div class="col-auto mr-auto">
+					<h5><small class="text-muted">Please Support by follow our instagram</small></h5>
+				</div>
+				<div class="col-auto">
+					<span class="text-muted"><a href="//instagram.com/schooljournalist"><i class="icon-social-instagram"></i> School Journalist</a></span>
+				</div>
+			</div>
+			<hr>
+		</div>
+	</header>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6 col-sm-12">
+					<h6 class="display-4">Twibbon Maker 75th HUT RI</h6>
+					<p>Silahkan upload foto di sebelah kanan atas dan download foto pada tombol dibawah ini</p>
+					<button class="btn d-none d-sm-block btn-shadow btn-light" onclick="download()"><h6><i class="icon-arrow-down"></i> Download</h6></button>
+					<button class="btn d-none d-sm-block btn-shadow btn-light" onclick="remake()"><h6><i class="icon-refresh"></i> Reset</h6></button>
+					<!-- <button class="btn btn-shadow btn-light" onclick="changeColor()"><h6><i class="icon-settings"></i> Color</h6></button> -->
+					<hr>
+				</div>
+				<div class="col-md-6 col-sm-12 justify-content-end" style="margin-bottom:70px">
+						<button class="btn btn-light" id="inputbtn"><h6><i class="icon-cloud-upload"></i>Upload Fotomu Disini</h6></button>
+						<center><p>Usahakan rasio foto 1:1 atau berbentuk kotak, agar tidak terkena resize otomatis</p></center>
+						<div id="canvas"></div>
+				</div>
+				<div class="col-md-12 d-block d-sm-none" style="position: fixed; bottom: 5px; left:30px">
+					<div class="row">
+						<button class="btn btn-shadow btn-light" style="margin-right:5px" onclick="download()"><h6><i class="icon-arrow-down"></i> Download</h6></button>
+						<button class="btn btn-shadow btn-light" style="margin-left:5px;" onclick="remake()"><h6><i class="icon-refresh"></i> Reset</h6></button>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+
+
+
+	<script>
+
+		function preload() {
+		   mask = loadImage('FA_SOCIAL MEDIA_ProfilePicture-03.png');
+		}
+
+		function setup() {
+			var uploadBtn = createFileInput(imageUpload);
+			uploadBtn.parent('inputbtn');
+			  // create canvas
+			  var c = createCanvas(500, 500);
+			  background('#fff');
+			  c.parent('canvas');
+			  // Add an event for when a file is dropped onto the canvas
+			  c.drop(gotFile);
+		}
+
+		function draw() {
+		  fill(0);
+		  noStroke();
+		  textSize(24);
+		  textAlign(CENTER);
+		  text('Fotomu akan Muncul disini', width/2, height/2);
+		  noLoop();
+		}
+
+		function remake() {
+			background('#fff');
+			redraw();
+		}
+
+		// function changeColor() {
+		// 	image(img, mouseX, mouseY, img.width, img.height);
+		// }
+
+		function download() {
+			saveCanvas("twibbon", 'jpg');
+		}
+
+		function gotFile(file) {
+		  // If it's an image file
+		  if (file.type === 'image') {
+		    // Create an image DOM element but don't show it
+		    background('#fff');
+		    redraw();
+		    var img = createImg(file.data).hide();
+		    // Draw the image onto the canvas
+		   image(img, 0, 0, width , height);
+
+		   
+		   image(mask, 0, 0, width, height);
+		  } else {
+		    println('Not an Photos file!');
+		  }
+		}
+
+		function imageUpload(file){
+		    img = loadImage(file.data,function(){
+		    	background('#fff');
+		    	redraw();
+		    	image(img, 0, 0, width , height);
+		        image(mask,0,0,width,height);
+		    })        
+		}
+	</script>
+	
+
+</body>
+</html>
